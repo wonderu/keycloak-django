@@ -6,13 +6,17 @@ volumes:
 
 services:
   db:
-      image: postgres:10
+      image: postgres:15
       volumes:
         - postgres_data:/var/lib/postgresql/data
+        - ./.deploy/db/01_createdb.sql:/docker-entrypoint-initdb.d/01_createdb.sql
       environment:
         POSTGRES_DB: keycloak
         POSTGRES_USER: keycloak
         POSTGRES_PASSWORD: password
+      ports:
+        - 5445:5432
+
   keycloak:
       image: quay.io/keycloak/keycloak:21.0.1
       environment:
