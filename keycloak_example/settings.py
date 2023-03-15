@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of allauth
-    'django.contrib.auth.backends.ModelBackend',
+    #'django.contrib.auth.backends.ModelBackend',
 
     # allauth specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.keycloak',
+    'customkeycloak',
+    #'allauth.socialaccount.providers.keycloak',
     'start',
 ]
 
@@ -68,7 +69,7 @@ ROOT_URLCONF = 'keycloak_example.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": [str(BASE_DIR.joinpath("templates"))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -148,11 +149,13 @@ SITE_ID = 1
 
 # Set your keycloak url and realm
 SOCIALACCOUNT_PROVIDERS = {
-    'keycloak': {
+    'customkeycloak': {
         'KEYCLOAK_URL': 'http://localhost:8080',
-        'KEYCLOAK_REALM': 'master'
+        'KEYCLOAK_REALM': 'master',
     }
 }
 
 ACCOUNT_ADAPTER = 'start.adapter.NoNewUsersAccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'start.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'start.adapter.SocialAccountAdapter'
+
+LOGIN_REDIRECT_URL='home'
