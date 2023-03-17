@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../allauth-keycloak-ext"
+		}
+	],
+	"settings": {
+		"esbonio.sphinx.confDir": ""
+	}
+}

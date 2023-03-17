@@ -8,6 +8,7 @@ cryptography==39.0.2
 defusedxml==0.7.1
 Django==4.1.7
 django-allauth==0.52.0
+-e git+ssh://git@github.com/wonderu/allauth-keycloak-ext.git@778af61f45ad953f5d52ece9849114427def9e44#egg=django_allauth_keycloak_ext
 idna==3.4
 mypy-extensions==1.0.0
 oauthlib==3.2.2
