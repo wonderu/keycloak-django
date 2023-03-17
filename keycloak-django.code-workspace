@@ -7,5 +7,7 @@
 			"path": "../allauth-keycloak-ext"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"esbonio.sphinx.confDir": ""
+	}
 }

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "keycloak_ext",
+    "allauth_keycloak_ext",
     #'allauth.socialaccount.providers.keycloak',
     "start",
 ]
@@ -147,7 +147,7 @@ SITE_ID = 1
 
 # Set your keycloak url and realm
 SOCIALACCOUNT_PROVIDERS = {
-    "customkeycloak": {
+    "keycloak_ext": {
         "KEYCLOAK_URL": "http://localhost:8080",
         "KEYCLOAK_REALM": "master",
         "GROUPS": {
