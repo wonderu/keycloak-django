@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "customkeycloak",
+    "keycloak_ext",
     #'allauth.socialaccount.providers.keycloak',
     "start",
 ]
@@ -150,14 +150,16 @@ SOCIALACCOUNT_PROVIDERS = {
     "customkeycloak": {
         "KEYCLOAK_URL": "http://localhost:8080",
         "KEYCLOAK_REALM": "master",
-        "GROUP_TO_FLAG_MAPPING": {
-            "is_staff": ["Django Staff", "Other Django Staff"],
-            "is_superuser": "django-admin-role",
-        },
+        "GROUPS": {
+            "GROUP_TO_FLAG_MAPPING": {
+                "is_staff": ["Django Staff", "django-admin-role"],
+                "is_superuser": "django-admin-role",
+            },
+        }
     }
 }
 
-ACCOUNT_ADAPTER = "start.adapter.NoNewUsersAccountAdapter"
-SOCIALACCOUNT_ADAPTER = "start.adapter.SocialAccountAdapter"
+# ACCOUNT_ADAPTER = "start.adapter.NoNewUsersAccountAdapter"
+# SOCIALACCOUNT_ADAPTER = "start.adapter.SocialAccountAdapter"
 
 LOGIN_REDIRECT_URL = "home"
