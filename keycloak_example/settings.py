@@ -155,7 +155,13 @@ SOCIALACCOUNT_PROVIDERS = {
                 "is_staff": ["Django Staff", "django-admin-role"],
                 "is_superuser": "django-admin-role",
             },
-        }
+            "GROUPS_MAPPING": {
+                # "django-admin-role": "django-admin-group",
+                "django-admin-role": None,
+                "offline_access": None,
+            },
+            "GROUPS_AUTO_CREATE": True,
+        },
     }
 }
 
