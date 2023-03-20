@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of allauth
-    #'django.contrib.auth.backends.ModelBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
     # allauth specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth_keycloak_ext",
-    #'allauth.socialaccount.providers.keycloak',
     "start",
 ]
 
@@ -148,6 +147,11 @@ SITE_ID = 1
 # Set your keycloak url and realm
 SOCIALACCOUNT_PROVIDERS = {
     "keycloak_ext": {
+        "APP": {
+            "client_id": "django-allauth",
+            "secret": "PiK3guKL8nsnMPRLTkkltPnaDD7bi2l5",
+            "key": "",
+        },
         "KEYCLOAK_URL": "http://localhost:8080",
         "KEYCLOAK_REALM": "master",
         "GROUPS": {
