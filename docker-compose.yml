@@ -45,8 +45,11 @@ services:
       - SQL_PASSWORD=app_password
       - SQL_HOST=db
       - SQL_PORT=5432
-    volumes:
-      - staticfiles:/app/staticfiles
+      - DJANGO_SUPERUSER_USERNAME=super
+      - DJANGO_SUPERUSER_PASSWORD=super
+      - DJANGO_SUPERUSER_EMAIL=super@test.com
+    #volumes:
+    #  - staticfiles:/app/staticfiles
     ports:
       - 8000:8000
     depends_on:
@@ -55,4 +58,4 @@ services:
 volumes:
   postgres_data:
     driver: local
-  staticfiles:
+  #staticfiles:
