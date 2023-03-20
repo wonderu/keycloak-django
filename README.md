@@ -8,3 +8,7 @@ python3.10 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+
+Add
+127.0.0.1 keycloak
+to /etc/hosts/
