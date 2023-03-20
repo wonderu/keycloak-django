@@ -8,9 +8,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./.deploy/db/01_createdb.sql:/docker-entrypoint-initdb.d/01_createdb.sql
     environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=password
     ports:
       - 5445:5432
 
@@ -18,14 +18,14 @@ services:
     image: quay.io/keycloak/keycloak:21.0.1
     container_name: keycloak
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: db
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_SCHEMA: public
-      DB_PASSWORD: password
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=db
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_SCHEMA=public
+      - DB_PASSWORD=password
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=Pa55w0rd
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
       #JDBC_PARAMS: "ssl=true"
     ports:
@@ -37,12 +37,22 @@ services:
   app:
     build: .
     container_name: app
-    command: sh -c "sleep 2 && sh entrypoint.sh && gunicorn portal.wsgi:application --bind 0.0.0.0:8000 --timeout 600"
+    command: sh -c "sleep 2 && sh entrypoint.sh && gunicorn keycloak_example.wsgi --bind 0.0.0.0:8000 --timeout 600"
+    environment:
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=app
+      - SQL_USER=app_user
+      - SQL_PASSWORD=app_password
+      - SQL_HOST=db
+      - SQL_PORT=5432
+    volumes:
+      - staticfiles:/app/staticfiles
     ports:
-      - 8080:8080
+      - 8000:8000
     depends_on:
       - db
 
 volumes:
   postgres_data:
     driver: local
+  staticfiles:
