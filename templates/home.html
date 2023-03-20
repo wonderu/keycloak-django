@@ -8,17 +8,17 @@
   <br /><br />
 
   {% if user.is_authenticated %}
-    <h3>Welcome {{ user.username }} !!!</h3>
-    <br /><br />
-    <a href="{% url 'account_logout' %}" class="btn btn-danger">Logout</a>
-    {% else %}
-    <!-- Twitter button starts here -->
-      </a>
-      <a href="{% provider_login_url 'keycloak_ext' action='reauthenticate' %}" class="btn btn-primary">
-        <i class="fa fa-twitter fa-fw"></i>
-        <span>Login with Keycloak</span>
-      </a>
-    <!-- Twitter button ends here -->
+  <h3>Welcome {{ user.username }} !!!</h3>
+  <br /><br />
+  <form action="{% url 'account_logout' %}" method="post">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Logout">
+  </form>
+  {% else %}
+  <form action="{% provider_login_url 'keycloak_ext' action='reauthenticate' %}" method="post">
+    {% csrf_token %}
+    <input class="btn btn-primary" type="submit" value="Login">
+  </form>
   {% endif %}
 </div>
 

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import json
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -146,18 +147,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SITE_ID = 1
 
-# Set your keycloak url and realm
-SOCIALACCOUNT_PROVIDERS = {
-    "keycloak_ext": {
-        "APP": {
-            "client_id": "django-allauth",
-            "secret": "PiK3guKL8nsnMPRLTkkltPnaDD7bi2l5",
-            "key": "",
-        },
-        "KEYCLOAK_URL": "http://localhost:8080",
-        "KEYCLOAK_URL_ALT": "http://keycloak:8080",
-        "KEYCLOAK_REALM": "master",
-        "GROUPS": {
+
+def getGroups():
+    groups = os.environ.get(
+        "KEYCLOAK_GROUPS",
+        {
             "GROUP_TO_FLAG_MAPPING": {
                 "is_staff": ["Django Staff", "django-admin-role"],
                 "is_superuser": "django-admin-role",
@@ -169,6 +163,30 @@ SOCIALACCOUNT_PROVIDERS = {
             },
             "GROUPS_AUTO_CREATE": True,
         },
+    )
+
+    print(groups)
+
+    if isinstance(groups, str):
+        groups = json.loads(groups)
+
+    return groups
+
+
+# Set your keycloak url and realm
+SOCIALACCOUNT_PROVIDERS = {
+    "keycloak_ext": {
+        "APP": {
+            "client_id": os.environ.get("KEYCLOAK_CLIENT_ID", "django-allauth"),
+            "secret": os.environ.get(
+                "KEYCLOAK_SECRET", "B5JcyEVyyHrRoMIsmopCwYrBW5QFsdu2"
+            ),
+            "key": "",
+        },
+        "KEYCLOAK_URL": os.environ.get("KEYCLOAK_URL", "http://keycloak:8080"),
+        # "KEYCLOAK_URL_ALT": "http://keycloak:8080",
+        "KEYCLOAK_REALM": os.environ.get("KEYCLOAK_REALM", "master"),
+        "GROUPS": getGroups(),
     }
 }
 
@@ -176,3 +194,4 @@ SOCIALACCOUNT_PROVIDERS = {
 # SOCIALACCOUNT_ADAPTER = "start.adapter.SocialAccountAdapter"
 
 LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
